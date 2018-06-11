@@ -35,5 +35,7 @@
 *.out
 *.app
 
+# ect
+*.ipch
 
 # End of https://www.gitignore.io/api/c++
