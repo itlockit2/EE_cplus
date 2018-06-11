@@ -4,8 +4,8 @@
 using namespace std;
 
 class MyVector {
-	int nSize; // º¤ÅÍÀÇ Å©±â
-	int *pnVector; // Á¤¼ö º¤ÅÍ Æ÷ÀÎÅÍ 
+	int nSize; // ë²¡í„°ì˜ í¬ê¸°
+	int *pnVector; // ì •ìˆ˜ ë²¡í„° í¬ì¸í„° 
 protected:
 	MyVector(int nSize = 10) {
 		this->nSize = nSize;
@@ -14,9 +14,11 @@ protected:
 	~MyVector() {
 		delete[] pnVector;
 	}
+	// pnVectorí–‰ë ¬ indexì— nValueê°’ì„ ëŒ€ì…í•œë‹¤.
 	void put(int nIndex, int nValue) {
 		pnVector[nIndex] = nValue;
 	}
+	// pnVectorí–‰ë ¬ì—ì„œ indexì— ìˆëŠ” ê°’ì„ ê°€ì ¸ì˜¨ë‹¤.
 	int get(int nIndex) {
 		return pnVector[nIndex];
 	}
@@ -26,8 +28,8 @@ protected:
 };
 
 class MyStack : public MyVector {
-	// topÀº ´ÙÀ½¿¡ pushÇÒ À§Ä¡(°¡Àå ÃÖ±Ù¿¡ ÀÔ·ÂµÇ¾ú´ø ÀÚ·áÀÇ À§Ä¡)
-	// topÀº ÇöÀç ½ºÅÃ¿¡ µé¾î ÀÖ´Â ÀÚ·áÀÇ °³¼ö¿Í µ¿ÀÏ
+	// topì€ ë‹¤ìŒì— pushí•  ìœ„ì¹˜(ê°€ì¥ ìµœê·¼ì— ì…ë ¥ë˜ì—ˆë˜ ìë£Œì˜ ìœ„ì¹˜)
+	// topì€ í˜„ì¬ ìŠ¤íƒì— ë“¤ì–´ ìˆëŠ” ìë£Œì˜ ê°œìˆ˜ì™€ ë™ì¼
 	int top;
 public:
 	MyStack(int nSize);
@@ -37,34 +39,39 @@ public:
 	int getStackSize();
 };
 
-// »ı¼ºÀÚ ÀÛ¼º, topÀ» 0À¸·Î ÃÊ±âÈ­
+// ìƒì„±ì ì‘ì„±, topì„ 0ìœ¼ë¡œ ì´ˆê¸°í™”
+// MyVectorìƒì„±ìë¥¼ í˜¸ì¶œí•´ì„œ pnVectorë¥¼ nSizeë¡œ ì´ˆê¸°í™”ì‹œì¼œì¤€ë‹¤.
 MyStack::MyStack(int nSize) :MyVector(nSize) {
 	top = 0;
 }
-// push()ÇÔ¼ö ÀÛ¼º, full stack ¿¹¿Ü Ã³¸®("full stack error" Ãâ·Â)
+// push()í•¨ìˆ˜ ì‘ì„±, full stack ì˜ˆì™¸ ì²˜ë¦¬("full stack error" ì¶œë ¥)
 void MyStack::push(int n) {
+	// topì´ nSizeì™€ ê°™ìœ¼ë©´ ë°°ì—´ì´ ì°¾ë‹¤ëŠ” ëœ»ì´ë¯€ë¡œ ì—ëŸ¬ ì¶œë ¥
 	if (top == getSize()) {
 		cout << "full stack error" << endl;
 		return;
 	}
+	// ê·¸ê²Œ ì•„ë‹ˆë¼ë©´ ë°°ì—´ì— ê°’ì„ ë„£ì–´ì£¼ê³  topì„ 1 ì¦ê°€
 	put(top, n);
 	top++;
 }
-// pop()ÇÔ¼ö ÀÛ¼º, empty stack ¿¹¿Ü Ã³¸®("empty stack error" Ãâ·Â)
+// pop()í•¨ìˆ˜ ì‘ì„±, empty stack ì˜ˆì™¸ ì²˜ë¦¬("empty stack error" ì¶œë ¥)
 int MyStack::pop() {
+	// topì´ 0ì´ë¼ë©´ ë°°ì—´ì´ ë¹„ì–´ìˆë‹¤ëŠ” ëœ»ì´ë¯€ë¡œ ì—ëŸ¬ ì¶œë ¥
 	if (top == 0) {
 		cout << "empty stack error" << endl;
 		return -1;
 	}
+	// ì•„ë‹ˆë¼ë©´ topì„ 1 ê°ì†Œí•˜ê³  ê°’ì„ëº€ë‹¤.
 	top--;
 	int result = get(top);
 	return result;
 }
-// getTop() ÇÔ¼ö ÀÛ¼º, ½ºÅÃÀÇ ÇöÀç Å©±â ¸®ÅÏ
+// getTop() í•¨ìˆ˜ ì‘ì„±, ìŠ¤íƒì˜ í˜„ì¬ í¬ê¸° ë¦¬í„´
 int MyStack::getTop() {
 	return top;
 }
-// getStackSize()ÇÔ¼ö ÀÛ¼º, ½ºÅÃÀÇ ÀüÃ¼ Å©±â ¸®ÅÏ
+// getStackSize()í•¨ìˆ˜ ì‘ì„±, ìŠ¤íƒì˜ ì „ì²´ í¬ê¸° ë¦¬í„´
 int MyStack::getStackSize() {
 	return getSize();
 }
@@ -81,12 +88,15 @@ int main() {
 
 	ofstream fout;
 	fout.open("stack.txt");
-	// ³ª¸ÓÁö ÄÜ¼Ö Ãâ·Â ¹× ÅØ½ºÆ® ÆÄÀÏ ÀúÀå
+	// ë‚˜ë¨¸ì§€ ì½˜ì†” ì¶œë ¥ ë° í…ìŠ¤íŠ¸ íŒŒì¼ ì €ì¥
 	cout << "stack pop :";
+	// íŒŒì¼ì— ê°’ì„ ì…ë ¥
 	fout << "stack pop :";
 	for (int i = 0; i<5; i++) {
 		int number = stack.pop();
+		// íŒŒì¼ì— ê°’ì„ ì…ë ¥
 		fout << number << " ";
+		// ì½˜ì†”ì— ê°’ì„ 
 		cout << number << " ";
 	}
 	cout << endl;
