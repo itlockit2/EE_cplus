@@ -7,94 +7,101 @@ using namespace std;
 class Player {
 	string name;
 public:
-	//»ı¼ºÀÚ ÇÔ¼ö
+	//ìƒì„±ì í•¨ìˆ˜
 	Player(string name);
-	//±âº»»ı¼ºÀÚ ÇÔ¼ö
+	//ê¸°ë³¸ìƒì„±ì í•¨ìˆ˜
 	Player() {}
 	string getName() const;
 	void setName(const string name);
 };
 
-//Player() ÇÔ¼ö ÀÛ¼º
+//Player() í•¨ìˆ˜ ì‘ì„±
 Player::Player(string name) {
 	this->name = name;
 }
-//getName() ÇÔ¼ö ÀÛ¼º
+//getName() í•¨ìˆ˜ ì‘ì„±
 string Player::getName() const {
 	return name;
 }
 
-//setName() ÇÔ¼ö ÀÛ¼º
+//setName() í•¨ìˆ˜ ì‘ì„±
 void Player::setName(const string name) {
 	this->name = name;
 }
 
 class DiceGame {
-	//ÁÖ»çÀ§ ¼ö
+	//ì£¼ì‚¬ìœ„ ìˆ˜
 	const int DICE_NUMBER = 3;
-	// Player¼ö
+	// Playerìˆ˜
 	const int PLAYER_NUMBER = 2;
-	// °ÔÀÓ¼ö
+	// ê²Œì„ìˆ˜
 	static int nCount;
 	Player player[2];
 	int iRandom[3];
 public:
-	//»ı¼ºÀÚ ÇÔ¼ö
+	//ìƒì„±ì í•¨ìˆ˜
 	DiceGame();
-	//iRandom[] ¹è¿­ÀÇ ¼ö°¡ ¸ğµÎ ÀÏÄ¡ÇÏ¸é true ¸®ÅÏ
+	//iRandom[] ë°°ì—´ì˜ ìˆ˜ê°€ ëª¨ë‘ ì¼ì¹˜í•˜ë©´ true ë¦¬í„´
 	bool isMatch();
-	//°ÔÀÓ½ÃÀÛ ÇÔ¼ö
+	//ê²Œì„ì‹œì‘ í•¨ìˆ˜
 	void start();
 };
 
-//DiceGame() ÇÔ¼ö ÀÛ¼º
+//DiceGame() í•¨ìˆ˜ ì‘ì„±
 DiceGame::DiceGame() {
 	cout << "Start Game" << endl;
+	// playerì˜ ì´ë¦„ì„ ì €ì¥í• ìˆ˜ ìˆëŠ” ë³€ìˆ˜ë¥¼ ì„ ì–¸í•œë‹¤.
 	string player1Name;
 	string player2Name;
 	cout << "Type the 1 st Player Name > ";
+	// cinì„ í†µí•´ ì´ë¦„ì„ ì…ë ¥ë°›ëŠ”ë‹¤.
 	cin >> player1Name;
 	cout << "Type the 2 st Player Name > ";
 	cin >> player2Name;
+	// ì…ë ¥ë°›ì€ ì´ë¦„ì„ í†µí•´ ê°ì²´ë¥¼ ìƒì„±í•œë‹¤.
 	Player p1(player1Name);
 	Player p2(player2Name);
+	// ë©¤ë²„ë³€ìˆ˜ ê°ì²´ë°°ì—´ Player player[2] ì— ìƒì„±í•œ ê°ì²´ë¥¼ ëŒ€ì…ì‹œí‚¨ë‹¤.
 	player[0] = p1;
 	player[1] = p2;
 }
-//isMatch() ÇÔ¼ö ÀÛ¼º
+//isMatch() í•¨ìˆ˜ ì‘ì„±
 bool DiceGame::isMatch() {
+	// iRandomì˜ ëª¨ë“ ê°’ì´ ê°™ìœ¼ë©´ trueë¥¼ ë¦¬í„´
 	return (iRandom[0] == iRandom[1] && iRandom[1] == iRandom[2]);
 }
-//start() ÇÔ¼ö ÀÛ¼º, ¹®Á¦ÀÇ Ãâ·Â ¿¹¿Í °°ÀÌ ½ÇÇà µÇ´Â ÇÔ¼ö
+//start() í•¨ìˆ˜ ì‘ì„±, ë¬¸ì œì˜ ì¶œë ¥ ì˜ˆì™€ ê°™ì´ ì‹¤í–‰ ë˜ëŠ” í•¨ìˆ˜
 void DiceGame::start() {
+	//problem1 ì°¸ê³ 
 	srand((unsigned int)time(NULL));
 	 while (true) {
+		// ê²Œì„ì„ í• ë•Œë§ˆë‹¤ nCountëŠ” 1ì¦ê°€í•˜ì—¬ì•¼ í•œë‹¤.
 		nCount++;
-		// ³­¼ö ¹ß»ı
+		// ë‚œìˆ˜ ë°œìƒ
 		for (int i = 0; i < 3; i++) {
 			iRandom[i] = rand() % 6 + 1;
 		}
-		// player1 ³­¼ö Ãâ·Â
+		// player1 ë‚œìˆ˜ ì¶œë ¥
 		cout << player[0].getName() << "\t";
 		for (int i = 0; i < 3; i++) {
 			cout << iRandom[i] << "\t";
 		}
-		// °ÔÀÓ Á¾·á ÆÇ´Ü
+		// ê²Œì„ ì¢…ë£Œ íŒë‹¨
 		if (isMatch()) {
 			cout << player[0].getName() << " Win in Game #" << nCount;
 			break;
 		}
 		cout << endl;
-		// ³­¼ö ¹ß»ı
+		// ë‚œìˆ˜ ë°œìƒ
 		for (int i = 0; i < 3; i++) {
 			iRandom[i] = rand() % 6 + 1;
 		}
-		// player2 ³­¼ö Ãâ·Â
+		// player2 ë‚œìˆ˜ ì¶œë ¥
 		cout << player[1].getName() << "\t";
 		for (int i = 0; i < 3; i++) {
 			cout << iRandom[i] << "\t";
 		}
-		// °ÔÀÓ Á¾·á ÆÇ´Ü
+		// ê²Œì„ ì¢…ë£Œ íŒë‹¨
 		if (isMatch()) {
 			cout << player[1].getName() << " Win in Game #" << nCount;
 			break;
