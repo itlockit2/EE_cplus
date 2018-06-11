@@ -3,38 +3,48 @@
 
 using namespace std;
 
-//»ı¼ºÇÒ ÁÂÇ¥Á¡ÀÇ °³¼ö
+//ìƒì„±í•  ì¢Œí‘œì ì˜ ê°œìˆ˜
 const int pointNum = 10;
-//2Â÷¿ø x,yÁÂÇ¥
+//2ì°¨ì› x,yì¢Œí‘œ
 const int pointDim = 2;
 
-//½Ç¼ö°ªÀ» °®´Â ÁÂÇ¥ 10°³¸¦ ·£´ıÇÏ°Ô »ı¼º 10Çà 2¿­¿¡ ÀúÀå
+//ì‹¤ìˆ˜ê°’ì„ ê°–ëŠ” ì¢Œí‘œ 10ê°œë¥¼ ëœë¤í•˜ê²Œ ìƒì„± 10í–‰ 2ì—´ì— ì €ì¥
 void getRandomData(double randomData[][pointDim]) {
+	//srand ì„¤ì •ì„ í•´ì¤˜ì•¼ ê°’ì´ ë‚œìˆ˜ë¡œ ì„¤ì •ëœë‹¤.
 	srand((unsigned int)time(NULL));
 	for(int i = 0 ; i < pointNum ; i++){
 		for (int j = 0; j < pointDim; j++) {
+			// rand()ì˜ ì¶œë ¥ê°’ì€ 1~32767 ê¹Œì§€ì˜ ê°’ì„ ê°–ëŠ”ë‹¤.
+			// ë”°ë¼ì„œ randì˜ ê°’ì„ randì˜ ìµœëŒ€ê°’ ì¦‰ 32767ë¡œ ë‚˜ëˆˆë‹¤ë©´
+			// randëŠ” 0.0000305185 ë¶€í„° 1 ê¹Œì§€ì˜ ê°’ì´ ë‚˜ì˜¤ê²Œëœë‹¤.
+			// ê·¸ê°’ì— 10ì„ ê³±í•œë‹¤ë©´  0.0003051850 ë¶€í„° 10ê¹Œì§€ì˜ ê°’ì´ ë‚˜ì˜¤ê²Œëœë‹¤.
 			randomData[i][j] = (double)rand()/RAND_MAX * (10);
 		}
 	}
 }
-//·£´ıÇÏ°Ô »ı¼ºµÈ ÁÂÇ¥ 10°³¸¦ Ãâ·Â
+//ëœë¤í•˜ê²Œ ìƒì„±ëœ ì¢Œí‘œ 10ê°œë¥¼ ì¶œë ¥
 void printRandomData(double randomData[][pointDim]) {
 	cout << "Randomly generated Points" << endl;
+	// 0 , 1, 2 ... 9
 	for(int i = 0 ; i < pointNum; i++){
-	for (int j = 0; j < pointDim; j++) {
-		cout << randomData[i][j] << " ";
-	}
+		// 0 , 1
+		for (int j = 0; j < pointDim; j++) {
+			cout << randomData[i][j] << " ";
+		}
 	cout << endl;
 	}
 }
-//µÎ ÁÂÇ¥ (x1,y1)°ú (x2,y2)»çÀÌÀÇ °Å¸®¸¦ °è»ê
+//ë‘ ì¢Œí‘œ (x1,y1)ê³¼ (x2,y2)ì‚¬ì´ì˜ ê±°ë¦¬ë¥¼ ê³„ì‚°
 double calculateDistance(double x1, double y1, double x2, double y2) {
-	return (x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1);
+	// sqrtë¥¼ ì´ìš©í•˜ì—¬ í•´ë‹¹ê°’ì˜ ë£¨íŠ¸ë¥¼ ì”Œìš´ë‹¤.
+	return sqrt((x2 - x1)*(x2 - x1) + (y2 - y1)*(y2 - y1));
 }
 
 int main() {
 	double randomData[pointNum][pointDim] = { 0.0 };
 	int minIndex = 0;
+	// ìµœì†Œê±°ë¦¬ê°’ì€ doubleì´ ê°€ì§ˆìˆ˜ ìˆëŠ” ìµœëŒ€ê°’ìœ¼ë¡œ ì´ˆê¸°í™” ì‹œì¼œì¤˜ì•¼í•œë‹¤.
+	// or randomData[0][0], randomData[0][1]ì˜ ê±°ë¦¬ë¡œ ì´ˆê¸°í™” ì‹œì¼œì¤˜ë„ ë¬´ê´€í•˜ë‹¤.
 	double minDistance = DBL_MAX;
 
 	getRandomData(randomData);
@@ -42,18 +52,22 @@ int main() {
 
 	cout << "Enter the calue of the point(double) x , y " << endl;
 	double pointX, pointY;
-	//»ç¿ëÀÚ·ÎºÎÅÍ ÁÂÇ¥¸¦ ÀÔ·Â
+	//ì‚¬ìš©ìë¡œë¶€í„° ì¢Œí‘œë¥¼ ì…ë ¥
 	cin >> pointX;
 	cin >> pointY;
-	//ÀÔ·Â¹ŞÀº ÁÂÇ¥¿Í °Å¸®°¡ °¡Àå °¡±î¿î ÁÂÇ¥ÀÇ ÀÎµ¦½º, ÁÂÇ¥°ª, °Å¸®¸¦ °è»ê
+	//ì…ë ¥ë°›ì€ ì¢Œí‘œì™€ ê±°ë¦¬ê°€ ê°€ì¥ ê°€ê¹Œìš´ ì¢Œí‘œì˜ ì¸ë±ìŠ¤, ì¢Œí‘œê°’, ê±°ë¦¬ë¥¼ ê³„ì‚°
 		for (int j = 0; j < pointNum; j++) {
+			// randomDataì™€ ì‚¬ìš©ìì˜ X,Yì¢Œí‘œì™€ì˜ ê±°ë¦¬ë¥¼ êµ¬í•œë‹¤.
 			double distance = calculateDistance(randomData[j][0], randomData[j][1], pointX, pointY);
+			//ë§Œì•½ êµ¬í•œ ê±°ë¦¬ê°€ ìµœì†Œê±°ë¦¬ë³´ë‹¤ ì‘ë‹¤ë©´
 			if (distance < minDistance) {
+				// minIndexì— í•´ë‹¹ ì¸ë±ìŠ¤ë¥¼ ì €ì¥í•˜ê³ 
 				minIndex = j;
+				// minDistanceì— êµ¬í•œ ê±°ë¦¬ë¥¼ ë„£ì–´ì¤€ë‹¤.
 				minDistance = distance;
 			}
 		}
-	//Display result(ÀÎµ¦½º, ÁÂÇ¥°ª, °Å¸®¸¦ Ãâ·Â)
+	//Display result(ì¸ë±ìŠ¤, ì¢Œí‘œê°’, ê±°ë¦¬ë¥¼ ì¶œë ¥)
 		cout << "The Nearest Index is " << minIndex << endl;
 		cout << "The Nearest point is " << randomData[minIndex][0] << "," << randomData[minIndex][1] << endl;
 		cout << "Distance is " << minDistance << endl;
