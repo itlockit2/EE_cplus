@@ -12,65 +12,76 @@ public:
 	Rational(int n = 1, int d = 1);
 	int getNumerator();
 	int getDenominator();
-	// µÎ À¯¸®¼öÀÇ °ö, ÇÕ, Ãâ·ÂÀ» ±¸ÇÏ´Â ÇÔ¼ö¸¦ Àü¿ªÇÔ¼ö·Î ±¸Çö
+	// ë‘ ìœ ë¦¬ìˆ˜ì˜ ê³±, í•©, ì¶œë ¥ì„ êµ¬í•˜ëŠ” í•¨ìˆ˜ë¥¼ ì „ì—­í•¨ìˆ˜ë¡œ êµ¬í˜„
 	friend Rational operator*(Rational &r1, Rational &r2);
 	friend Rational operator+(Rational &r1, Rational &r2);
 	friend ostream& operator<<(ostream&os, Rational &r);
 };
-// Rational Å¬·¡½º »ı¼ºÀÚ ÇÔ¼ö Rational(int n =1, int d = 1)ÀÛ¼º
+// Rational í´ë˜ìŠ¤ ìƒì„±ì í•¨ìˆ˜ Rational(int n =1, int d = 1)ì‘ì„±
 Rational::Rational(int n, int d) {
 	numerator = n;
 	denominator = d;
 }
-// Rational Å¬·¡½º ¸â¹ö ÇÔ¼ö getNumerator() ÀÛ¼º
+// Rational í´ë˜ìŠ¤ ë©¤ë²„ í•¨ìˆ˜ getNumerator() ì‘ì„±
 int Rational::getNumerator() {
 	return numerator;
 }
-// Rational Å¬·¡½º ¸â¹ö ÇÔ¼ö getDenominator() ÀÛ¼º
+// Rational í´ë˜ìŠ¤ ë©¤ë²„ í•¨ìˆ˜ getDenominator() ì‘ì„±
 int Rational::getDenominator() {
 	return denominator;
 }
-// operator*() ÇÔ¼ö ÀÛ¼º
+// operator*() í•¨ìˆ˜ ì‘ì„±
 Rational operator*(Rational &r1, Rational &r2) {
+	// ë¶„ìˆ˜ì˜ ê³±ì…ˆì—ì„œ ë¶„ìëŠ” ë¶„ìë¼ë¦¬ ë¶„ëª¨ëŠ” ë¶„ëª¨ë¼ë¦¬ ê³±í•œë‹¤.
 	int resultNumerator = r1.getNumerator() * r2.getNumerator();
 	int resultDenominator = r1.getDenominator() * r2.getDenominator();
 	int resultGCD = findGCD(resultNumerator, resultDenominator);
+	// ê²°ê³¼ ë¶„ìˆ˜ì˜ ë¶„ì, ë¶„ëª¨ë¥¼ ë¶„ì,ë¶„ëª¨ì˜ ìµœëŒ€ê³µì•½ìˆ˜ë¡œ ë‚˜ëˆ„ì–´ ê¸°ì•½ë¶„ìˆ˜í˜•íƒœë¡œ ë°”ê¾¸ì–´ì¤€ë‹¤.
 	resultNumerator = resultNumerator / resultGCD;
 	resultDenominator = resultDenominator / resultGCD;
 	return Rational(resultNumerator, resultDenominator);
 }
-// operator+() ÇÔ¼ö ÀÛ¼º
+// operator+() í•¨ìˆ˜ ì‘ì„±
 Rational operator+(Rational &r1, Rational &r2) {
+	// ë¶„ìˆ˜ì˜ ë§ì…ˆì—ì„œ ë¶„ìëŠ” ë¶„ì1*ë¶„ëª¨2 + ë¶„ì2 * ë¶„ëª¨1 ì´ë‹¤.
+	// ex) 1/2 + 1/3 = (1*3)+(2*1)/6
+	// ë¶„ëª¨ëŠ” ë¶„ëª¨ë¼ë¦¬ì˜ ê³±
 	int resultNumerator = r1.getNumerator() * r2.getDenominator() + r1.getDenominator() * r2.getNumerator();
 	int resultDenominator = r1.getDenominator() * r2.getDenominator();
 	int resultGCD = findGCD(resultNumerator, resultDenominator);
+	// ê³±ì…ˆê³¼ ë§ˆì°¬ê°€ì§€ë¡œ ê¸°ì•½ë¶„ìˆ˜í˜•íƒœë¡œ ë°”ê¾¸ì–´ì¤€ë‹¤.
 	resultNumerator = resultNumerator / resultGCD;
 	resultDenominator = resultDenominator / resultGCD;
 	return Rational(resultNumerator, resultDenominator);
 }
-// operator<<() ÇÔ¼ö ÀÛ¼º
+// operator<<() í•¨ìˆ˜ ì‘ì„±
 ostream& operator<<(ostream&os, Rational &r) {
 	os << r.getNumerator() << " / " << r.getDenominator();
 	return os;
 }
-// µÎ ¼öÀÇ ÃÖ´ë°ø¾à¼ö¸¦ ±¸ÇÏ´Â Àü¿ªÇÔ¼ö findGCD()ÇÔ¼ö ÀÛ¼º 
-// x°¡ yº¸´Ù ÀÛÀº ¼ö ÀÌ¸é µÎ¼ö¸¦ swapÇÏ´Â swap()ÇÔ¼ö È£Ãâ
+// ë‘ ìˆ˜ì˜ ìµœëŒ€ê³µì•½ìˆ˜ë¥¼ êµ¬í•˜ëŠ” ì „ì—­í•¨ìˆ˜ findGCD()í•¨ìˆ˜ ì‘ì„± 
+// xê°€ yë³´ë‹¤ ì‘ì€ ìˆ˜ ì´ë©´ ë‘ìˆ˜ë¥¼ swapí•˜ëŠ” swap()í•¨ìˆ˜ í˜¸ì¶œ
 int findGCD(int x, int y) {
+	// yê°€ 0ì´ ë ë•Œê¹Œì§€ ë°˜ë³µí•œë‹¤.
 	while (y != 0) {
+		// ë§Œì•½ xê°€ yë³´ë‹¤ ì‘ì€ ìˆ˜ ì´ë©´ ë‘ìˆ˜ë¥¼ swapí•¨ìˆ˜ë¥¼ í†µí•´ ë³€ê²½í•œë‹¤.
 		if (x < y) {
 			swap(x, y);
 		}
+		// ë¬¸ì œ ì„¤ëª…ì— ë‚˜ì™€ ìˆëŠ” ì•Œê³ ë¦¬ì¦˜
 		int r = x % y;
 		x = y;
 		y = r;
 	}
 	return x;
 }
-// µÎ ¼öÀÇ ÃÖ¼Ò°ø¹è¼ö¸¦ ±¸ÇÏ´Â Àü¿ªÇÔ¼ö findLCM()ÇÔ¼ö ÀÛ¼º
+// ë‘ ìˆ˜ì˜ ìµœì†Œê³µë°°ìˆ˜ë¥¼ êµ¬í•˜ëŠ” ì „ì—­í•¨ìˆ˜ findLCM()í•¨ìˆ˜ ì‘ì„±
 int findLCM(int x, int y) {
+	// ë¬¸ì œ ì„¤ëª…ì— ë‚˜ì™€ìˆëŠ” ì•Œê³ ë¦¬ì¦˜
+	// ìµœì†Œê³µë°°ìˆ˜ëŠ” ë‘ ìˆ˜ A, Bì˜ ê³±ì„ ìµœëŒ€ê³µì•½ìˆ˜ Gë¡œ ë‚˜ëˆˆë‹¤.
 	return (x * y) / findGCD(x, y);
 }
-// µÎ ¼ö¸¦ swapÇÏ´Â Àü¿ªÇÔ¼ö swap()ÇÔ¼ö ÀÛ¼º
+// ë‘ ìˆ˜ë¥¼ swapí•˜ëŠ” ì „ì—­í•¨ìˆ˜ swap()í•¨ìˆ˜ ì‘ì„±
 void swap(int &x, int &y) {
 	int temp = x;
 	x = y;
@@ -78,17 +89,17 @@ void swap(int &x, int &y) {
 }
 
 int main() {
-	int n1, d1; // Ã¹ ¹øÂ° À¯¸®¼öÀÇ ºĞÀÚ¿Í ºĞ¸ğ °ª ÀúÀå
-	int n2, d2; // µÎ ¹øÂ° À¯¸®¼öÀÇ ºĞÀÚ¿Í ºĞ¸ğ °ª ÀúÀå
+	int n1, d1; // ì²« ë²ˆì§¸ ìœ ë¦¬ìˆ˜ì˜ ë¶„ìì™€ ë¶„ëª¨ ê°’ ì €ì¥
+	int n2, d2; // ë‘ ë²ˆì§¸ ìœ ë¦¬ìˆ˜ì˜ ë¶„ìì™€ ë¶„ëª¨ ê°’ ì €ì¥
 				
-	// µÎ°³ÀÇ À¯¸®¼ö¸¦ »ç¿ëÀÚ·ÎºÎÅÍ ÀÔ·Â ¹Ş´Â ÄÚµå ÀÛ¼º
-	cout << "Ã¹ ¹øÂ° À¯¸®¼öÀÇ ºĞÀÚ¿Í ºĞ¸ğ°ªÀ» ÀÔ·ÂÇÏ¼¼¿ä>> ";
+	// ë‘ê°œì˜ ìœ ë¦¬ìˆ˜ë¥¼ ì‚¬ìš©ìë¡œë¶€í„° ì…ë ¥ ë°›ëŠ” ì½”ë“œ ì‘ì„±
+	cout << "ì²« ë²ˆì§¸ ìœ ë¦¬ìˆ˜ì˜ ë¶„ìì™€ ë¶„ëª¨ê°’ì„ ì…ë ¥í•˜ì„¸ìš”>> ";
 	cin >> n1;
 	cin >> d1;
-	cout << "µÎ ¹øÂ° À¯¸®¼öÀÇ ºĞÀÚ¿Í ºĞ¸ğ°ªÀ» ÀÔ·ÂÇÏ¼¼¿ä>> ";
+	cout << "ë‘ ë²ˆì§¸ ìœ ë¦¬ìˆ˜ì˜ ë¶„ìì™€ ë¶„ëª¨ê°’ì„ ì…ë ¥í•˜ì„¸ìš”>> ";
 	cin >> n2;
 	cin >> d2;
-	// µÎ À¯¸®¼ö ÇÕ°ú °öÀÇ °á°ú¸¦ ±â¾àºĞ¼ö·Î Ãâ·ÂÇÏ´Â ÄÚµå ÀÛ¼º
+	// ë‘ ìœ ë¦¬ìˆ˜ í•©ê³¼ ê³±ì˜ ê²°ê³¼ë¥¼ ê¸°ì•½ë¶„ìˆ˜ë¡œ ì¶œë ¥í•˜ëŠ” ì½”ë“œ ì‘ì„±
 	Rational r1(n1, d1);
 	Rational r2(n2, d2);
 	Rational r3 = r1 + r2;
