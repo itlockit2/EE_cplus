@@ -4,13 +4,13 @@ using namespace std;
 
 class Matrix {
 public:
-	int nRows; // Çà·ÄÀÇ ÇàÀÇ °³¼ö 
-	int nCols; // Çà·ÄÀÇ ¿­ÀÇ °³¼ö
-	int **ppnData; // 2Â÷¿ø Çà·Ä Æ÷ÀÎÅÍ 
+	int nRows; // í–‰ë ¬ì˜ í–‰ì˜ ê°œìˆ˜ 
+	int nCols; // í–‰ë ¬ì˜ ì—´ì˜ ê°œìˆ˜
+	int **ppnData; // 2ì°¨ì› í–‰ë ¬ í¬ì¸í„° 
 	
-	Matrix(int rows, int cols); //»ı¼ºÀÚ
-	Matrix(const Matrix& obj); //º¹»ç »ı¼ºÀÚ
-	~Matrix(); // ¼Ò¸êÀÚ
+	Matrix(int rows, int cols); //ìƒì„±ì
+	Matrix(const Matrix& obj); //ë³µì‚¬ ìƒì„±ì
+	~Matrix(); // ì†Œë©¸ì
 	Matrix operator+(const Matrix& obj);
 	Matrix operator*(const Matrix& obj);
 	Matrix operator=(const Matrix& obj);
@@ -19,67 +19,79 @@ public:
 	friend ostream& operator<<(ostream &out, Matrix& obj);
 };
 
-// »ı¼ºÀÚ ÇÔ¼ö ÀÛ¼º, 2Â÷¿ø Çà·ÄÀÇ µ¿Àû ¸Ş¸ğ¸® ÇÒ´çÇÏ¿© ±¸ÇöÇÏ°í, 2Â÷¿ø ¹è¿­ ÃÊ±âÈ­
+// ìƒì„±ì í•¨ìˆ˜ ì‘ì„±, 2ì°¨ì› í–‰ë ¬ì˜ ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹í•˜ì—¬ êµ¬í˜„í•˜ê³ , 2ì°¨ì› ë°°ì—´ ì´ˆê¸°í™”
 Matrix::Matrix(int rows, int cols) {
 	this->nRows = rows;
 	this->nCols = cols;
-	// ³ª¸ÓÁö´Â ¹®Á¦´ë·Î ±¸Çö
-	// 2Â÷¿ø Çà·Ä µ¿Àû ¸Ş¸ğ¸® ÇÒ´ç 
+	// ë‚˜ë¨¸ì§€ëŠ” ë¬¸ì œëŒ€ë¡œ êµ¬í˜„
+	// 2ì°¨ì› í–‰ë ¬ ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹ 
 	ppnData = new int*[nRows];
 	for (int i = 0; i<nRows; i++) {
 		ppnData[i] = new int[nCols];
 	}
+	// 2ì°¨ì› í–‰ë ¬ì„ 0ìœ¼ë¡œ ì´ˆê¸°í™” ì‹œì¼œì¤€ë‹¤.
 	for (int i = 0; i < nRows; i++) {
 		for (int j = 0; j < nCols; j++) {
 			ppnData[i][j] = 0;
 		}
 	}
 }
-// º¹»ç »ı¼ºÀÚ ÇÔ¼ö ÀÛ¼º, 2Â÷¿ø Çà·ÄÀÇ µ¿Àû ¸Ş¸ğ¸® ÇÒ´çÇÏ¿© ±¸Çö
+// ë³µì‚¬ ìƒì„±ì í•¨ìˆ˜ ì‘ì„±, 2ì°¨ì› í–‰ë ¬ì˜ ë™ì  ë©”ëª¨ë¦¬ í• ë‹¹í•˜ì—¬ êµ¬í˜„
 Matrix::Matrix(const Matrix& obj) {
 	this->nRows = obj.nRows;
 	this->nCols = obj.nCols;
+	// ê¸°ë³¸ìƒì„±ì ë¶€ë¶„ ì°¸ê³ 
 	ppnData = new int*[nRows];
 	for (int i = 0; i<nRows; i++) {
 		ppnData[i] = new int[nCols];
 	}
+	// ë§¤ê°œë³€ìˆ˜ë¡œ ë°›ì€ í–‰ë ¬ì— ìˆëŠ” ê°’ë“¤ì„ thisë¡œ ì˜®ê²¨ì¤€ë‹¤.
 	for (int i = 0; i < obj.nRows; i++) {
 		for (int j = 0; j < obj.nCols; j++) {
 			this->ppnData[i][j] = obj.ppnData[i][j];
 		}
 	}
 }
-// ¼Ò¸êÀÚ ÇÔ¼ö, µ¿Àû ¸Ş¸ğ¸® ¹İ³³
+// ì†Œë©¸ì í•¨ìˆ˜, ë™ì  ë©”ëª¨ë¦¬ ë°˜ë‚©
 Matrix::~Matrix() {
 	for (int i = 0; i<nRows; i++)
 		delete[] ppnData[i];
 	delete[] ppnData;
 }
 
-// + ¿¬»êÀÚ ÇÔ¼ö ÀÛ¼º  
+// + ì—°ì‚°ì í•¨ìˆ˜ ì‘ì„±  
  Matrix Matrix::operator+(const Matrix& obj) {
+	// ê²°ê³¼ê°’ì„ ë‹´ì„ ê°ì²´ë¥¼ í•˜ë‚˜ ì„ ì–¸í•œë‹¤.
 	Matrix result(obj.nRows,obj.nCols);
 	for (int i = 0; i < nRows; i++) {
 		for (int j = 0; j < nCols; j++) {
+			// ê²°ê³¼ê°’ì„ ë‹´ì„ ê°ì²´ì— ë”í•œê°’ì„ ë„£ì–´ì¤€ë‹¤.
 			result.ppnData[i][j] = this->ppnData[i][j] + obj.ppnData[i][j];
 		}
 	}
+	 // ê²°ê³¼ ê°ì²´ë¥¼ ë¦¬í„´
 	return result;
 }
 
-// * ¿¬»êÀÚ ÇÔ¼ö ÀÛ¼º 
+// * ì—°ì‚°ì í•¨ìˆ˜ ì‘ì„± 
  Matrix Matrix::operator*(const Matrix& obj) {
 	 Matrix result(this->nRows, obj.nCols);
+	 // 3 * 2 í–‰ë ¬ê³¼ 2 * 3 í–‰ë ¬ì„ ê³±ì…ˆì—°ì‚° í•œë‹¤ë©´ 
+	 // 3 * 3 í–‰ë ¬ì´ ìƒì„±ëœë‹¤. ë”°ë¼ì„œ rowëŠ” ì•ì—ìˆëŠ” í–‰ë ¬ì˜ rowê°’ colsëŠ” ë’¤ì—ìˆëŠ” í–‰ë ¬ì˜ colsê°’ì´ë‹¤.
 	 for (int row = 0; row < this->nRows; row++) {
-		 for (int col = 0; col < obj.nCols; col++) {  
+		 for (int col = 0; col < obj.nCols; col++) { 
+			 // inner ì—°ì‚°ì€ ì•ì—ìˆëŠ” í–‰ë ¬ì˜ cols ê°’ì´ë‚˜ ë’¤ì—ìˆëŠ” í–‰ë ¬ì˜ rowê°’ì´ë‹¤.
+			 // í•˜ì§€ë§Œ ê³±ì…ˆì—°ì‚°ì„ í•˜ê¸°ìœ„í•´ì„œëŠ” ë‘ ê°’ì´ ê°™ì•„ì•¼ í•˜ë¯€ë¡œ
+			 // ì–´ë– í•œ ê°’ì„ ì‚¬ìš©í•´ë„ ìƒê´€ì´ì—†ë‹¤.
 			 for (int inner = 0; inner < obj.nRows; inner++) {
 				 result.ppnData[row][col] = result.ppnData[row][col] + this->ppnData[row][inner] * obj.ppnData[inner][col];
 			 }
 		 }
 	 }
+	 // í•´ë‹¹ ì•Œê³ ë¦¬ì¦˜ì´ ì´í•´ê°€ ì•ˆëœë‹¤ë©´ ì†ìœ¼ë¡œ ì§ì ‘ í–‰ë ¬ì„ ë§Œë“¤ì–´ì„œ í•´ë³´ëŠ”ê²ƒì„ ì¶”ì²œ
 	 return result;
  }
-// = ¿¬»êÀÚ ÇÔ¼ö ÀÛ¼º 
+// = ì—°ì‚°ì í•¨ìˆ˜ ì‘ì„± 
 Matrix Matrix::operator=(const Matrix& obj) {
 	for (int i = 0; i < obj.nRows; i++) {
 		for (int j = 0; j < obj.nCols; j++) {
@@ -88,8 +100,8 @@ Matrix Matrix::operator=(const Matrix& obj) {
 	}
 	return *this;
  }
-// >> ¿¬»êÀÚ ÇÔ¼ö ÀÛ¼º, Çà°ú ¿­ÀÇ °³¼ö 
-// ¹× Çà·ÄÀÇ ¿ø¼Ò °ªÀ» »ç¿ëÀÚ·ÎºÎÅÍ ÀÔ·Â ¹ŞÀ½
+// >> ì—°ì‚°ì í•¨ìˆ˜ ì‘ì„±, í–‰ê³¼ ì—´ì˜ ê°œìˆ˜ 
+// ë° í–‰ë ¬ì˜ ì›ì†Œ ê°’ì„ ì‚¬ìš©ìë¡œë¶€í„° ì…ë ¥ ë°›ìŒ
 istream& operator>>(istream &in, Matrix& obj) {
 	cout << "type the row and col size: ";
 	in >> obj.nRows;
@@ -105,7 +117,7 @@ istream& operator>>(istream &in, Matrix& obj) {
 	return in;
 }
 
-// << ¿¬»êÀÚ ÇÔ¼ö ÀÛ¼º
+// << ì—°ì‚°ì í•¨ìˆ˜ ì‘ì„±
 ostream& operator<<(ostream &out, Matrix& obj) {
 	for (int i = 0; i < obj.nRows; i++) {
 		for (int j = 0; j < obj.nCols; j++) {
@@ -128,9 +140,9 @@ int main() {
 		cout << "3.Program exit" << endl;
 
 		int nMenu;
-		// »ç¿ëÀÚ·ÎºÎÅÍ ¸Ş´º ¹øÈ£ ÀÔ·Â
+		// ì‚¬ìš©ìë¡œë¶€í„° ë©”ë‰´ ë²ˆí˜¸ ì…ë ¥
 		cin >> nMenu;
-		// switch¹® ÀÛ¼º 
+		// switchë¬¸ ì‘ì„± 
 		switch (nMenu)
 		{
 			cout << nMenu;
@@ -150,7 +162,7 @@ int main() {
 		default:
 			break;
 		}
-		// 1¹ø ¼±ÅÃÇÏ¸é c=a+b, 2¹ø ¼±ÅÃÇÏ¸é c=a*b
-		// 3¹ø ¼±ÅÃÇÏ¸é ÇÁ·Î±×·¥ Á¾·á, Àß¸øµÈ ¸Ş´º¸¦ ¼±ÅÃÇÏ¸é ¿¡·¯ ¸Ş¼¼Áö Ãâ·Â
+		// 1ë²ˆ ì„ íƒí•˜ë©´ c=a+b, 2ë²ˆ ì„ íƒí•˜ë©´ c=a*b
+		// 3ë²ˆ ì„ íƒí•˜ë©´ í”„ë¡œê·¸ë¨ ì¢…ë£Œ, ì˜ëª»ëœ ë©”ë‰´ë¥¼ ì„ íƒí•˜ë©´ ì—ëŸ¬ ë©”ì„¸ì§€ ì¶œë ¥
 	}
 	}
