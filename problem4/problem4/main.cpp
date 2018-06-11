@@ -21,11 +21,11 @@ public:
 
 void LoopAdder::read() {
 	cout << name << ":" << endl;
-	cout << "Ã³À½ ¼ö¿¡¼­ µÎ¹øÂ° ¼ö±îÁö ´õÇÕ´Ï´Ù. µÎ¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä >>";
+	cout << "ì²˜ìŒ ìˆ˜ì—ì„œ ë‘ë²ˆì§¸ ìˆ˜ê¹Œì§€ ë”í•©ë‹ˆë‹¤. ë‘ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš” >>";
 	cin >> x >> y;
 }
 void LoopAdder::write() {
-	cout << x << "¿¡¼­" << y << "±îÁöÀÇ ÇÕ = " << sum << "ÀÔ´Ï´Ù" << endl;
+	cout << x << "ì—ì„œ" << y << "ê¹Œì§€ì˜ í•© = " << sum << "ì…ë‹ˆë‹¤" << endl;
 }
 
 void LoopAdder::run() {
@@ -34,14 +34,16 @@ void LoopAdder::run() {
 	write();
 }
 
-// ForLoopAdder Å¬·¡½º ÀÛ¼º
+// ForLoopAdder í´ë˜ìŠ¤ ì‘ì„±
 class ForLoopAdder : public LoopAdder{
 public:
 	string name;
 	int x, y, sum;
+	// ì´ˆê¸°í™” ë°°ì—´ì„ í†µí•´ sumê°’ì„ 0ìœ¼ë¡œ ì´ˆê¸°í™” ì‹œì¼œì¤€ë‹¤.
 	ForLoopAdder(string name) : sum(0) {
 		this->name = name;
 	}
+	// xë¶€í„° yê¹Œì§€ì˜ í•©ì„ sumì— ì €ì¥í•˜ê³  returní•œë‹¤.
 	int calculate() {
 		for (int i = x; i <= y; i++) {
 			sum += i;
@@ -50,11 +52,11 @@ public:
 	}
 	void read() {
 		cout << name << ":" << endl;
-		cout << "Ã³À½ ¼ö¿¡¼­ µÎ¹øÂ° ¼ö±îÁö ´õÇÕ´Ï´Ù. µÎ¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä >>";
+		cout << "ì²˜ìŒ ìˆ˜ì—ì„œ ë‘ë²ˆì§¸ ìˆ˜ê¹Œì§€ ë”í•©ë‹ˆë‹¤. ë‘ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš” >>";
 		cin >> x >> y;
 	}
 	void write() {
-		cout << x << "¿¡¼­" << y << "±îÁöÀÇ ÇÕ = " << sum << "ÀÔ´Ï´Ù" << endl;
+		cout << x << "ì—ì„œ" << y << "ê¹Œì§€ì˜ í•© = " << sum << "ì…ë‹ˆë‹¤" << endl;
 	}
 	void run() {
 		read();
@@ -62,7 +64,7 @@ public:
 		write();
 	}
 };
-// WhileLoopAdder Å¬·¡½º ÀÛ¼º
+// WhileLoopAdder í´ë˜ìŠ¤ ì‘ì„±
 class WhileLoopAdder : public LoopAdder {
 public:
 	string name;
@@ -81,11 +83,11 @@ public:
 	}
 	void read() {
 		cout << name << ":" << endl;
-		cout << "Ã³À½ ¼ö¿¡¼­ µÎ¹øÂ° ¼ö±îÁö ´õÇÕ´Ï´Ù. µÎ¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä >>";
+		cout << "ì²˜ìŒ ìˆ˜ì—ì„œ ë‘ë²ˆì§¸ ìˆ˜ê¹Œì§€ ë”í•©ë‹ˆë‹¤. ë‘ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš” >>";
 		cin >> x >> y;
 	}
 	void write() {
-		cout << x << "¿¡¼­" << y << "±îÁöÀÇ ÇÕ = " << sum << "ÀÔ´Ï´Ù" << endl;
+		cout << x << "ì—ì„œ" << y << "ê¹Œì§€ì˜ í•© = " << sum << "ì…ë‹ˆë‹¤" << endl;
 	}
 	void run() {
 		read();
@@ -93,7 +95,7 @@ public:
 		write();
 	}
 };
-// DoWhileLoopAdder Å¬·¡½º ÀÛ¼º
+// DoWhileLoopAdder í´ë˜ìŠ¤ ì‘ì„±
 class DoWhileLoopAdder : public LoopAdder {
 public:
 	string name;
@@ -113,11 +115,11 @@ public:
 	}
 	void read() {
 		cout << name << ":" << endl;
-		cout << "Ã³À½ ¼ö¿¡¼­ µÎ¹øÂ° ¼ö±îÁö ´õÇÕ´Ï´Ù. µÎ¼ö¸¦ ÀÔ·ÂÇÏ¼¼¿ä >>";
+		cout << "ì²˜ìŒ ìˆ˜ì—ì„œ ë‘ë²ˆì§¸ ìˆ˜ê¹Œì§€ ë”í•©ë‹ˆë‹¤. ë‘ìˆ˜ë¥¼ ì…ë ¥í•˜ì„¸ìš” >>";
 		cin >> x >> y;
 	}
 	void write() {
-		cout << x << "¿¡¼­" << y << "±îÁöÀÇ ÇÕ = " << sum << "ÀÔ´Ï´Ù" << endl;
+		cout << x << "ì—ì„œ" << y << "ê¹Œì§€ì˜ í•© = " << sum << "ì…ë‹ˆë‹¤" << endl;
 	}
 	void run() {
 		read();
